@@ -37,4 +37,3 @@ $router->post('/transactions', 'transactions/store.php')->only(['auth', 'salespe
 $router->get('/users', 'users.php')->only(['auth']);
 $router->get('/accounts', 'accounts.php')->only(['auth']);
 $router->get('/customers', 'customers.php')->only(['auth']);
-$router->get('/reports', 'reports.php')->only(['auth']);

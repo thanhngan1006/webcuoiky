@@ -28,13 +28,9 @@ if (!empty($customerNameSearchParam)) {
   $params['customerName'] = '%' . $customerNameSearchParam . '%';
 }
 
-if (!empty($salePersonNameSearchParam) && $user['role'] === 'admin') {
+if (!empty($salePersonNameSearchParam)) {
   $queryParts[] = 'usr.full_name LIKE :salePersonName';
   $params['salePersonName'] = '%' . $salePersonNameSearchParam . '%';
-} else if ($user['role'] === 'salesperson') {
-  $queryParts[] = 'usr.id = :salePersonId';
-  $params['salePersonId'] = 'FPJ4ubwqNqZ8Obzj';
-  // $params['salePersonId'] = $user['id'];
 }
 if (!empty($orderCodeSearchParam) && Validator::string($_GET['orderCode'], 8, 8)) {
   $queryParts[] = 'trans.orderCode = :orderCode';
@@ -57,7 +53,6 @@ customers AS cus ON trans.customer_id = cus.id
 INNER JOIN 
 users AS usr ON trans.salesperson_id = usr.id
 WHERE ' . implode(' AND ', $queryParts), $params)->get();
-
 view("transactions/index.view.php", [
   'transactions' => $transactions,
   'user' => $user
