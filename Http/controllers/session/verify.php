@@ -20,17 +20,23 @@ $current_time_formatted = date('Y-m-d H:i:s', $current_time);
 
 $user = $db->query('SELECT * FROM users WHERE password_reset_token = :password_reset_token', [
   'password_reset_token' => $_GET['token'],
-])->findOrFail();
+])->find();
 
+if (!$user) {
+  abort(419);
+}
 
 // ===
 // khi link het thoi han va khong the dang nhap duoc
 if (strtotime($current_time_formatted) - strtotime($user['password_reset_expiry'])  >= 0) {
-  $db->query('UPDATE users SET password_reset_token = NULL, password_reset_expiry = NULL WHERE id = :id', [
+  $user = $db->query('UPDATE users SET password_reset_token = NULL, password_reset_expiry = NULL WHERE id = :id', [
     'id' =>  $user['id'],
   ]);
-  die("This link is only valid in 1 minute, please try later");
+  if (!$user) {
+    abort(419);
+  }
 }
+
 
 $db->query('UPDATE users SET password_reset_token = NULL, password_reset_expiry = NULL WHERE id = :id', [
   'id' => $user['id'],
