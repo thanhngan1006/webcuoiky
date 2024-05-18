@@ -80,17 +80,20 @@ while (in_array($orderCode, $listOrderCodeTransactions)) {
 }
 // create transaction
 $totalAmount = 0;
+$totalImportPrice = 0;
 for ($i = 0; $i < count($products); $i++) {
 
   $totalAmount += $productsFormQuantity[$i] * $products[$i]['retail_price'];
+  $totalImportPrice += $productsFormQuantity[$i] * $products[$i]['import_price'];
 }
 $db->query(
-  'INSERT INTO transactions (id, orderCode, customer_id, salesperson_id, total_amount, paid_amount, change_amount) VALUES (:id, :order_code, :customer_id, :salesperson_id, :total_amount, :paid_amount,:change_amount)',
+  'INSERT INTO transactions (id, orderCode, customer_id, salesperson_id, total_import_price, total_amount, paid_amount, change_amount) VALUES (:id, :order_code, :customer_id, :salesperson_id, :total_import_price, :total_amount, :paid_amount,:change_amount)',
   [
     'id' => $idTransaction,
     'order_code' => $orderCode,
     'customer_id' => $idCustomer,
     'salesperson_id' => $_SESSION['user']['id'],
+    'total_import_price' => $totalImportPrice,
     'total_amount' => $totalAmount,
     'paid_amount' => $res['paid_amount'],
     'change_amount' => $res['paid_amount'] - $totalAmount,
@@ -137,4 +140,5 @@ for ($i = 0; $i < count($products); $i++) {
 echo json_encode([
   'status' => 201,
   'message' => "Tạo đơn hàng thành công",
+  "data" => $idTransaction
 ]);

@@ -160,6 +160,7 @@ function handleSelectProduct(barcode) {
   selectedProductsGlobal.push({ ...selectedProduct, quantity: 1 });
   renderSelectedProducts();
   renderSearchProducts();
+  isCanSubmitForm();
 }
 
 function increaseProductQuantity(barcode) {
@@ -176,6 +177,7 @@ function increaseProductQuantity(barcode) {
   };
   selectedProductsGlobal[selectedProductIndex] = updatedProduct;
   renderSelectedProducts();
+  isCanSubmitForm();
 }
 
 function decreaseProductQuantity(barcode) {
@@ -202,6 +204,7 @@ function decreaseProductQuantity(barcode) {
   };
   selectedProductsGlobal[selectedProductIndex] = updatedProduct;
   renderSelectedProducts();
+  isCanSubmitForm();
 }
 
 const shuffle = (array) => {
@@ -392,7 +395,6 @@ async function getInfoCustomer() {
       inputCustomerAddress.setAttribute("disabled", true);
       inputCustomerAddress.setAttribute("readonly", true);
     } else {
-      console.log("sss");
       inputCustomerName.value = "";
       inputCustomerAddress.value = "";
       customerNameLabel.textContent = "";
@@ -436,23 +438,27 @@ async function postJSON() {
     });
 
     const data = await response.json();
-    if (data.status === 201) {
-      const toast = document.getElementById("toast");
-      const toastTitle = document.getElementById("toast-title");
-      const toastContent = document.getElementById("toast-content");
-      toastTitle.textContent = "Tạo đơn hàng thành công";
-      toastContent.textContent =
-        "Bạn sẽ được chuyển về trang quản lý sau 3 giây.";
-      toast.classList.add("md:right-5");
-      toast.classList.add("right-4");
-      setTimeout(() => {
-        toast.classList.remove("md:right-5");
-        toast.classList.remove("right-4");
-        toastTitle.textContent = "";
-        toastContent.textContent = "";
-        window.location.replace(`${window.location.origin}/transactions`);
-      }, 3000);
+    if (data.status !== 201) {
+      return;
     }
+
+    btnSubmit.setAttribute("disabled", true);
+    const toast = document.getElementById("toast");
+    const toastTitle = document.getElementById("toast-title");
+    const toastContent = document.getElementById("toast-content");
+    toastTitle.textContent = "Tạo đơn hàng thành công";
+    toastContent.textContent = "Di chuyển đến trang chi tiết sau 3s.";
+    toast.classList.add("md:right-5");
+    toast.classList.add("right-4");
+    setTimeout(() => {
+      toast.classList.remove("md:right-5");
+      toast.classList.remove("right-4");
+      toastTitle.textContent = "";
+      toastContent.textContent = "";
+      window.location.replace(
+        `${window.location.origin}/transaction?id=${data.data}`
+      );
+    }, 3000);
   } catch (error) {}
 }
 

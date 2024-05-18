@@ -30,6 +30,7 @@ $router->get('/customers/info', 'customers/info.php')->only(['auth']);
 $router->get('/transactions', 'transactions/index.php')->only(['auth']);
 $router->get('/transactions/add', 'transactions/add.php')->only(['auth', 'salesperson']);
 $router->post('/transactions', 'transactions/store.php')->only(['auth', 'salesperson']);
+$router->get('/transaction', 'transactions/show.php')->only(['auth']);
 
 $router->get('/user', 'users/show.php')->only(['auth']);
 $router->get('/user/edit', 'users/edit.php')->only(['auth']);
