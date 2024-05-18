@@ -8,7 +8,11 @@ const content = document.querySelector(".content");
 const moon = document.querySelector(".moon");
 const sun = document.querySelector(".sun");
 const PATTERN_VALIDATE_PHONE = /^0\d{9}$/;
+const subMenu = document.getElementById("subMenu");
 
+function toggleMenu() {
+  subMenu.classList.toggle("open-menu");
+}
 function openNav() {
   if (sidebar.classList.contains("-translate-x-48")) {
     // max sidebar

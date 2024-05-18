@@ -21,9 +21,18 @@ $product = $db->query('select * from products where barcode = :barcode', [
 ])->findOrFail();
 
 $user = $db->query('select * from users where email = "admin@gmail.com" ')->findOrFail();
+$db->query('delete from transaction_details where product_barcode = :product_barcode', [
+  'product_barcode' => $product['barcode']
+]);
+
+
+$db->query('delete from inventory where product_barcode = :product_barcode', [
+  'product_barcode' => $product['barcode']
+]);
+
 
 $db->query('delete from products where barcode = :barcode', [
-  'barcode' => $_POST['barcode']
+  'barcode' => $product['barcode']
 ]);
 
 

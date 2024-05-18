@@ -65,6 +65,17 @@
                 </div>
 
                 <div class="sm:col-span-4">
+                  <label for="image_url" class="block text-sm font-medium leading-6 text-gray-900">Image</label>
+                  <div class="mt-2">
+                    <input id="image_url" name="image_url" type="text" autocomplete="image_url" class="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="<?= $product['image_url'] ?>" disabled>
+                  </div>
+                  <?php if (isset($errors['image_url'])) : ?>
+                    <p class="text-red-500 text-xs mt-1"><?= $errors['image_url'] ?></p>
+                  <?php endif; ?>
+                </div>
+
+
+                <div class="sm:col-span-4">
                   <label for="category" class="block text-sm font-medium leading-6 text-gray-900">Category</label>
                   <div class="mt-2">
                     <input id="category" name="category" type="text" autocomplete="category" class="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="<?= $product['category']  ?>" disabled>
@@ -85,7 +96,7 @@
           <div class="mt-6 flex items-center justify-end gap-x-6">
             <button type="button" class="text-sm font-semibold leading-6 text-gray-900"><a href="/products">Go back</a></button>
             <?php if ($_SESSION['user']['role'] == 'admin') :  ?>
-              <button class='same-btn edit-btn text-gray-500 border border-current px-3 py-1 rounded'><a href="/product/edit?barcode=<?= $product['barcode'] ?>">Chỉnh sửa</a></button>
+              <a class="same-btn edit-btn text-gray-500 border border-current px-3 py-1 rounded" href="/product/edit?barcode=<?= $product['barcode'] ?>">Chỉnh sửa</a>
             <?php endif; ?>
           </div>
 

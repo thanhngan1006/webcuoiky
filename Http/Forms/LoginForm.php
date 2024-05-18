@@ -30,7 +30,6 @@ class LoginForm
   }
 
 
-  // like get function
   public function errors()
   {
     return $this->errors;
