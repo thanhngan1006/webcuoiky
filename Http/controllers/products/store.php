@@ -10,9 +10,6 @@ $user = $db->query('select * from users where email = "admin@gmail.com" ')->find
 
 $errors = [];
 // className::methodName()
-if (!Validator::string($_POST['barcode'], 1, 1000)) {
-  $errors['barcode'] = 'A barcode of no more than 1,000 characters is required';
-}
 
 if (!Validator::string($_POST['name'], 1, 1000)) {
   $errors['name'] = 'A name of no more than 1,000 characters is required';
@@ -38,16 +35,38 @@ if (!empty($errors)) {
   ]);
 }
 
-// no errors then insert
+$listProductBarcode = [];
+
+$barcodeProduct = randomNumber(8);
+
+$productBarcodeDb = $db->query('SELECT barcode from products')->get();
+
+foreach ($productBarcodeDb as $key => $value) {
+  array_push($listProductBarcode, $value['barcode']);
+}
+
+while (in_array($barcodeProduct, $listProductBarcode)) {
+  $barcodeProduct = randomNumber(8);
+}
 
 $db->query(
-  'INSERT INTO products (barcode, name, import_price, retail_price, category, created_at, updated_at) VALUES (:barcode, :name, :import_price, :retail_price, :category, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
+  'INSERT INTO products (barcode, name, import_price, retail_price, category, created_at, updated_at, image_url) VALUES (:barcode, :name, :import_price, :retail_price, :category, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, :image_url)',
   [
-    'barcode' => $_POST['barcode'],
+    'barcode' => $barcodeProduct,
     'name' => $_POST['name'],
     'import_price' => $_POST['import_price'],
     'retail_price' => $_POST['retail_price'],
-    'category' => $_POST['category']
+    'category' => $_POST['category'],
+    'image_url' => $_POST['image_url']
+  ]
+);
+
+$db->query(
+  'INSERT INTO inventory (product_barcode, quantity, sold_quantity) VALUES (:product_barcode, :quantity, :sold_quantity )',
+  [
+    'product_barcode' => $barcodeProduct,
+    'quantity' => $_POST['quantity'],
+    'sold_quantity' => 0
   ]
 );
 

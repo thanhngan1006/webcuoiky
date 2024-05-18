@@ -17,27 +17,34 @@ if (!empty($barcodeProductSearchParams) && !Validator::string($_GET['barcode'], 
     'user' => $user
   ]);
 }
+
 if (!empty($nameProductSearchParams)) {
   $queryParts[] = 'name LIKE :nameSearch';
   $params['nameSearch'] = '%' . $nameProductSearchParams . '%';
 }
+
 if (!empty($barcodeProductSearchParams) && Validator::string($_GET['barcode'], 8, 8)) {
   $queryParts[] = 'barcode = :barcodeSearch';
   $params['barcodeSearch'] = $barcodeProductSearchParams;
 }
 
-$products = $db->query('SELECT 
+$products = $db->query(
+  'SELECT 
 prods.barcode,
 prods.name,
 prods.import_price,
 prods.retail_price,
 prods.category,
+prods.image_url,
 inv.quantity,
 inv.sold_quantity
 FROM products AS prods 
 INNER JOIN 
-inventory AS inv ON prods.barcode = inv.product_barcode 
-WHERE ' . implode(' AND ', $queryParts), $params)->get();
+inventory AS inv ON prods.barcode = inv.product_barcode' .
+    (!empty($queryParts) ? ' WHERE ' . implode(' AND ', $queryParts) : '') .
+    ' ORDER BY prods.name ASC',
+  $params
+)->get();
 view("products/index.view.php", [
   'products' => $products,
 ]);

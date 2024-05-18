@@ -55,7 +55,8 @@
     <!-- LIST PRODUCTS -->
     <div class="flex flex-col">
       <!-- PROPERTIES -->
-      <div class="grid border-b-[2px] border-neutral-5 <?= $_SESSION['user']['role'] === "admin" ? 'grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr]' : 'grid-cols-[1fr_1fr_1fr_1fr_1fr]' ?>">
+      <div class="grid border-b-[2px] border-neutral-5 <?= $_SESSION['user']['role'] === "admin" ? 'grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr]' : 'grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr]' ?>">
+        <span class="p-2.5 text-neutral-7">Hình ảnh</span>
         <span class="p-2.5 text-neutral-7">Tên sản phẩm</span>
         <span class="p-2.5 text-neutral-7">Mã sản phẩm</span>
         <?php if ($_SESSION['user']['role'] == 'admin') : ?>
@@ -76,7 +77,8 @@
 
         <?php foreach ($products as $product) : ?>
           <!-- PRODUCT INFO -->
-          <div class="grid border-b-[2px] border-neutral-5 <?= $_SESSION['user']['role'] === "admin" ? 'grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr]' : 'grid-cols-[1fr_1fr_1fr_1fr_1fr]' ?>">
+          <div class="grid border-b-[2px] border-neutral-5 <?= $_SESSION['user']['role'] === "admin" ? 'grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr]' : 'grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr]' ?>">
+            <img class="w-16 h-16 px-1 py-1" src="<?= $product['image_url'] ?>" alt="">
             <span class="p-2.5 text-neutral-10"><?= $product['name'] ?></span>
             <span class="p-2.5 text-neutral-10"><?= $product['barcode'] ?></span>
             <?php if ($_SESSION['user']['role'] == 'admin') : ?>

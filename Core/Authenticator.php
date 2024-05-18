@@ -15,13 +15,14 @@ class Authenticator
     if ($user) {
       // we have a user, but we don't know if the password provides matched what we have in the database
       if (password_verify($password_hash, $user['password_hash'])) {
-        $this->login([
-          'username' => $username,
-          'full_name' => $user['full_name'],
-          'role' => $user['role'],
-          'id' => $user['id'],
-          'email' => $user['email']
-        ]);
+        $this->login($user);
+        // $this->login([
+        //   'username' => $username,
+        //   'full_name' => $user['full_name'],
+        //   'role' => $user['role'],
+        //   'id' => $user['id'],
+        //   'email' => $user['email']
+        // ]);
 
         return true;
       }
@@ -29,6 +30,8 @@ class Authenticator
 
     return false;
   }
+
+
 
   public function login($user)
   {

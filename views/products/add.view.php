@@ -22,17 +22,6 @@
               <h2 class="text-base font-semibold leading-7 text-gray-900 mb-8">Thêm thông tin sản phẩm</h2>
 
               <div class="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div class="sm:col-span-3">
-                  <label for="barcode" class="block text-sm font-medium leading-6 text-gray-900">Barcode</label>
-                  <div class="mt-2">
-                    <input type="text" name="barcode" id="barcode" autocomplete="barcode" class=" px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="<?= isset($_POST['barcode']) ? $_POST['barcode'] : '' ?>">
-
-                  </div>
-                  <?php if (isset($errors['barcode'])) : ?>
-                    <p class="text-red-500 text-xs mt-1"><?= $errors['barcode'] ?></p>
-                  <?php endif; ?>
-
-                </div>
 
                 <div class="sm:col-span-3">
                   <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Product's name</label>
@@ -71,6 +60,26 @@
                   </div>
                   <?php if (isset($errors['category'])) : ?>
                     <p class="text-red-500 text-xs mt-1"><?= $errors['category'] ?></p>
+                  <?php endif; ?>
+                </div>
+
+                <div class="sm:col-span-4">
+                  <label for="image_url" class="block text-sm font-medium leading-6 text-gray-900">Image</label>
+                  <div class="mt-2">
+                    <input id="image_url" name="image_url" type="text" autocomplete="image_url" class="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="<?= isset($_POST['image_url']) ? $_POST['image_url'] : '' ?>">
+                  </div>
+                  <?php if (isset($errors['image_url'])) : ?>
+                    <p class="text-red-500 text-xs mt-1"><?= $errors['image_url'] ?></p>
+                  <?php endif; ?>
+                </div>
+
+                <div class="sm:col-span-4">
+                  <label for="quantity" class="block text-sm font-medium leading-6 text-gray-900">Quatity</label>
+                  <div class="mt-2">
+                    <input id="quantity" name="quantity" type="text" autocomplete="quantity" class="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="<?= isset($_POST['quantity']) ? $_POST['quantity'] : '' ?>">
+                  </div>
+                  <?php if (isset($errors['quantity'])) : ?>
+                    <p class="text-red-500 text-xs mt-1"><?= $errors['quantity'] ?></p>
                   <?php endif; ?>
                 </div>
 
