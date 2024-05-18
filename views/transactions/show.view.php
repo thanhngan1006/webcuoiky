@@ -1,13 +1,7 @@
 <?php require base_path('views/partials/head.php') ?>
 <?php require base_path('views/partials/header.php') ?>
-<script src="/js/addTransaction.js" defer>
-</script>
 
-<script type='text/javascript'>
-  window.addEventListener('load', function () {
-    getAllProducts(<?= json_encode($products) ?>);
-  });
-</script>
+<!-- phan noi dung chinh -->
 <div class="relative flex flex-col gap-4 pb-6 overflow-x-clip">
   <div class='flex items-center gap-1.5'>
     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 512 512">
@@ -22,131 +16,105 @@
       <circle cx="56" cy="344" r="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
         stroke-width="32" />
     </svg>
-    <span class='font-semibold text-lg'>Tạo giao dịch</span>
+    <span class='font-semibold text-lg'>Chi tiết giao dịch</span>
   </div>
-  <div class="grid grid-cols-1 md:grid-cols-[62.5fr_37.5fr] items-start gap-4">
+  <div class="grid grid-cols-1 items-start gap-4">
 
-    <form class="col-span-1 md:col-span-1 flex flex-col gap-4">
+    <div class="col-span-1 md:col-span-1 flex flex-col gap-4">
       <div class="flex flex-col gap-5 p-5 bg-white rounded border border-neutral-5 shadow
       overflow-hidden">
         <div class="flex flex-col gap-1.5">
           <span class="pb-2.5 text-[15px] font-semibold leading-5 border-b border-neutral-5">Thông tin khách hàng</span>
-          <div class="grid grid-cols-1  sm:grid-cols-[1fr_1fr_1fr] gap-2.5">
+          <div class="grid sm:grid-cols-[1fr_1fr] md:grid-cols-[1fr_1fr_2fr] gap-2.5">
             <div class="flex flex-col gap-1.5">
               <label for="customerPhone">
-                <div class="flex gap-0.5 items-center">
-                  <span>Số điện thoại</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    class="w-2 h-2 text-common-error">
-                    <path
-                      d="M12 18.26L4.94704 22.208L6.52204 14.28L0.587036 8.792L8.61404 7.84L12 0.5L15.386 7.84L23.413 8.792L17.478 14.28L19.053 22.208L12 18.26Z"
-                      fill="currentColor" />
-                  </svg>
-                </div>
+                Số điện thoại
               </label>
               <input type="text" name="customerPhone" id="customerPhone" placeholder="Nhập số điện thoại"
-                class="base-input-sm">
+                class="base-input-sm" value="<?= $transaction['customer_phone'] ?>" disabled>
             </div>
-            <div class="flex flex-col gap-1.5 opacity-0 invisible" id="form-field-customer-name">
+            <div class="flex flex-col gap-1.5" id="form-field-customer-name">
               <label for="customerName">
-                <div class="flex gap-0.5 items-center">
-                  <span>Họ và tên</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    class="w-2 h-2 text-common-error">
-                    <path
-                      d="M12 18.26L4.94704 22.208L6.52204 14.28L0.587036 8.792L8.61404 7.84L12 0.5L15.386 7.84L23.413 8.792L17.478 14.28L19.053 22.208L12 18.26Z"
-                      fill="currentColor" />
-                  </svg>
-                </div>
+                Họ và tên
               </label>
               <input type="text" name="customerName" id="customerName" placeholder="Nhập họ và tên"
-                class="base-input-sm">
+                class="base-input-sm" value="<?= $transaction['customer_name'] ?>" disabled>
             </div>
-            <div class="flex flex-col gap-1.5 opacity-0 invisible" id="form-field-customer-address">
+            <div class="flex flex-col gap-1.5 sm:col-span-2 md:col-span-1" id="form-field-customer-address">
               <label for="customerAddress">
-                <div class="flex gap-0.5 items-center">
-                  <span>Địa chỉ</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    class="w-2 h-2 text-common-error">
-                    <path
-                      d="M12 18.26L4.94704 22.208L6.52204 14.28L0.587036 8.792L8.61404 7.84L12 0.5L15.386 7.84L23.413 8.792L17.478 14.28L19.053 22.208L12 18.26Z"
-                      fill="currentColor" />
-                  </svg>
-                </div>
+                Địa chỉ
               </label>
               <input type="text" name="customerAddress" id="customerAddress" placeholder="Nhập địa chỉ"
-                class="base-input-sm">
+                class="base-input-sm" value="<?= $transaction['customer_address'] ?>" disabled>
             </div>
-            <div class="flex flex-col gap-1.5">
-              <label for="totalAmount">
-                <div class="flex gap-0.5 items-center">
-                  <span>Tiền đã nhận</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    class="w-2 h-2 text-common-error">
-                    <path
-                      d="M12 18.26L4.94704 22.208L6.52204 14.28L0.587036 8.792L8.61404 7.84L12 0.5L15.386 7.84L23.413 8.792L17.478 14.28L19.053 22.208L12 18.26Z"
-                      fill="currentColor" />
-                  </svg>
-                </div>
-              </label>
-              <input type="text" name="totalAmount" id="totalAmount" placeholder="Nhập tiền nhận từ khách hàng"
-                class="base-input-sm">
-            </div>
-            <button type="button" class="button-secondary-solid-sm self-end" id="btn-check-info-customer">Kiểm tra thông
-              tin</button>
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
-          <span class="pb-2.5 text-[15px] font-semibold leading-5 border-b border-neutral-5">Tìm kiếm sản phẩm</span>
-          <input type="text" id="search-products" placeholder="Nhập tên sản phẩm" class="base-input-sm">
-          <div class="relative">
-            <div
-              class="absolute flex flex-col gap-1.5 w-full max-h-[200px] bg-white overflow-y-auto not-show-scroll rounded border opacity-0 invisible"
-              id="search-products-show"></div>
-
-
+          <span class="pb-2.5 text-[15px] font-semibold leading-5 border-b border-neutral-5">Thông tin đơn hàng</span>
+          <div class="grid sm:grid-cols-[1fr_1fr_1fr] gap-2.5">
+            <div class="flex flex-col gap-1.5">
+              <label for="totalAmount">
+                Tiền đơn hàng
+              </label>
+              <input type="text" name="totalAmount" id="totalAmount" placeholder="Nhập tiền nhận từ khách hàng"
+                class="base-input-sm" value="<?= currency_format($transaction['total_amount']) ?>" disabled>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <label for="paidAmount">
+                Tiền đã nhận
+              </label>
+              <input type="text" name="paidAmount" id="paidAmount" placeholder="Nhập tiền nhận từ khách hàng"
+                class="base-input-sm" value="<?= currency_format($transaction['paid_amount']) ?>" disabled>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <label for="changeAmount">
+                Tiền hoàn trả
+              </label>
+              <input type="text" name="changeAmount" id="changeAmount" placeholder="Nhập tiền nhận từ khách hàng"
+                class="base-input-sm" value="<?= currency_format($transaction['change_amount']) ?>" disabled>
+            </div>
           </div>
         </div>
         <div class="flex flex-col gap-1.5">
           <span class="pb-2.5 text-[15px] font-semibold leading-5 border-b border-neutral-5">Danh sách sản phẩm đã
-            chọn</span>
+            mua</span>
           <div class="flex flex-col gap-1.5">
-            <div class="grid grid-cols-[2fr_1fr_1fr_1fr] items-center p-2">
+            <div class="grid grid-cols-[2fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr] gap-2 items-center p-2">
 
-              <span class="font-semibold">Sản phẩm</span>
+              <span class="font-semibold">Tên sản phẩm</span>
               <span class="font-semibold">Số tiền</span>
               <span class="font-semibold  justify-self-center">Số lượng</span>
-              <span class="font-semibold justify-self-center">Thao tác</span>
+              <span class="font-semibold justify-self-center hidden sm:block">Thao tác</span>
             </div>
           </div>
           <div class="flex flex-col gap-4 max-h-[800px] overflow-y-auto not-show-scroll" id="selected-products">
-            <!-- <div class="grid grid-cols-[2fr_1fr_1fr_1fr] items-center p-2 border rounded ">
+            <?php foreach ($products as $product): ?>
+              <div
+                class="grid grid-cols-[2fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr] gap-2 items-center p-2 border rounded ">
                 <div class="flex items-center gap-1.5">
-                  <img class="w-20"
-                    src="https://cdn.tgdd.vn/Products/Images/42/322096/samsung-galaxy-a55-5g-blue-thumbnew-600x600.jpg"
-                    alt="products" loading="lazy">
-                  <span class="text-lg font-semibold">Iphone 14 Promax</span>
+                  <img class="w-10" src="<?= $product['image_url'] ?>" alt="products" loading="lazy">
+                  <span
+                    class="text-md sm:text-lg font-semibold line-clamp-2 max-w-full sm:max-w-full"><?= $product['name'] ?></span>
                 </div>
-                <span class="font-semibold"><?= currency_format(15400000) ?></span>
+                <span class="font-semibold"><?= currency_format($product['product_retail_price']) ?></span>
                 <div class="flex items-center gap-2 justify-self-center">
-                  <button type="button" class="button-primary-solid-sm size-8 p-0">-</button>
                   <span class="flex items-center justify-center size-8">2</span>
-                  <button type="button" class="button-primary-solid-sm size-8 p-0">+</buttont>
                 </div>
-                <button type="button" class="button-red-ghost-sm h-8 px-4 w-max justify-self-center">Xoá</button>
-              </div> -->
+                <a href="/product?barcode=<?= $product['product_barcode'] ?>"
+                  class="button-primary-ghost-sm leading-none cursor-pointer h-8 px-4 w-max justify-self-center hidden sm:block">Chi
+                  tiết</a>
+              </div>
+            <?php endforeach; ?>
           </div>
         </div>
       </div>
       <div class="flex items-center justify-end gap-2.5">
-        <a href="/transactions" class="button-red-ghost-sm">Huỷ bỏ</a>
-        <button type="button" onclick="postJSON()" id="submit-transaction-btn" class="button-primary-solid-sm">Tạo giao
-          dịch</button>
+        <a href="/transactions" class="button-primary-solid-sm">Quay lại</a>
       </div>
-    </form>
+    </div>
     <!-- PAYMENT SUMMARY -->
     <!-- top-16 because header height 16, + 4 for spacing top  -->
-    <div class="col-span-1 md:col-span-1 md:sticky md:top-20">
+    <!-- <div class="col-span-1 md:col-span-1 md:sticky md:top-20">
       <div class="flex flex-col gap-1.5 bg-white p-5">
         <span class="pb-2.5 text-[15px] font-semibold leading-5 border-b border-neutral-5">Thông tin hoá đơn</span>
         <div class="flex flex-col  gap-1.5 p-3 bg-white rounded border border-neutral-5 overflow-hidden">
@@ -196,7 +164,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 

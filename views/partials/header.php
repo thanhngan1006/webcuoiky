@@ -13,25 +13,6 @@
     max-height: 400px;
   }
 </style>
-
-
-<?php
-
-use Core\App;
-use Core\Database;
-use Core\Validator;
-
-$db = App::resolve(Database::class);
-
-$user = $db->query(
-  'select * from users where id = :id',
-  [
-    'id' => $_SESSION['user']['id']
-  ]
-)->find();
-?>
-
-
 <header class="fixed w-full z-30 flex bg-white p-2 items-center justify-center h-16 px-10 shadow">
   <div class="logo ml-12 transform ease-in-out duration-300 flex-none h-full flex items-center justify-center">
     PhoneStore
@@ -47,7 +28,7 @@ $user = $db->query(
         <div class="flex gap-x-3 items-center px-3">
           <div class="flex-none flex justify-center">
             <div class="w-8 h-8 flex rounded-full overflow-hidden">
-              <img src="<?= $user['profile_picture_url'] ?? 'https://1.bp.blogspot.com/-LjgFJBMTmeM/YZ-UJ2Mdb-I/AAAAAAAACMk/3iYczLi5BTQefjXjnJsNtaSYlP-A2jO6wCLcBGAsYHQ/s1200/2a.jpg' ?>" alt="Profile Picture" />
+              <img src="<?= $_SESSION['user']['profile_picture_url'] ?? 'https://1.bp.blogspot.com/-LjgFJBMTmeM/YZ-UJ2Mdb-I/AAAAAAAACMk/3iYczLi5BTQefjXjnJsNtaSYlP-A2jO6wCLcBGAsYHQ/s1200/2a.jpg' ?>" alt="Profile Picture" />
             </div>
           </div>
           <!-- <div class="hidden md:block text-sm md:text-md text-black">John Doe</div> -->
@@ -195,4 +176,11 @@ $user = $db->query(
 
   </div>
 </aside>
+<div id="toast"
+  class="self-end fixed z-50 top-20 -right-[999px] w-max px-2 py-3 bg-white rounded-lg transition-all duration-300 border border-l-4  border-common-success">
+  <div class="flex flex-col gap-1.5 ">
+    <span class="text-neutral-9" id="toast-title">Tạo đơn hàng thành công</span>
+    <span class="text-neutral-7" id="toast-content">Bạn sẽ được chuyển về trang quản lý giao dịch sau 3s</span>
+  </div>
+</div>
 <div class="content h-screen ml-12 transform ease-in-out duration-300 pt-20 px-4 md:px-5 pb-4">

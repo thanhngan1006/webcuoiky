@@ -4,6 +4,9 @@ use Core\App;
 use Core\Database;
 use Core\Validator;
 
+// $saigonTz = new DateTimeZone("Asia/Saigon");
+// $now = (new \DateTime('now', $saigonTz))->modify('+60 seconds');
+// dd($now);
 $db = App::resolve(Database::class);
 $params = [];
 // d/n get() la fetchAll() trong function trong class Database
@@ -42,6 +45,7 @@ trans.id AS transaction_id,
 cus.full_name AS customer_name,
 usr.full_name AS salePerson_name,
 trans.orderCode,
+trans.total_import_price,
 trans.total_amount,
 trans.paid_amount,
 trans.change_amount,

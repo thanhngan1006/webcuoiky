@@ -10,7 +10,10 @@ $container = new Container();
 // bind that key to a function that is responsible for building up the database object
 $container->bind('Core\Database', function () {
   $config = require base_path('config.php');
-  return new Database($config['database']);
+  if($config['env'] == 'production') {
+    return new Database($config['database'], $config['db_account']['username'], $config['db_account']['password']);
+  }
+  return new Database($config['database_local']);
 });
 
 App::setContainer($container);
