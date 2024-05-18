@@ -7,6 +7,7 @@ const logo = document.querySelector(".logo");
 const content = document.querySelector(".content");
 const moon = document.querySelector(".moon");
 const sun = document.querySelector(".sun");
+const PATTERN_VALIDATE_PHONE = /^0\d{9}$/;
 
 function openNav() {
   if (sidebar.classList.contains("-translate-x-48")) {

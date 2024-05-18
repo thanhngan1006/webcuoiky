@@ -24,11 +24,13 @@
       <form method="get" class="flex gap-2.5 items-end">
         <div class="flex flex-col gap-1.5">
           <label for="salePersonName">Tên người bán hàng</label>
-          <input type="text" name="salePersonName" id="salePersonName" placeholder="Tìm tên người bán hàng" class="base-input-sm">
+          <input type="text" name="salePersonName" id="salePersonName" placeholder="Tìm tên người bán hàng"
+            class="base-input-sm">
         </div>
         <div class="flex flex-col gap-1.5">
           <label for="customerName">Tên khách hàng</label>
-          <input type="text" name="customerName" id="customerName" placeholder="Tìm tên khách hàng" class="base-input-sm">
+          <input type="text" name="customerName" id="customerName" placeholder="Tìm tên khách hàng"
+            class="base-input-sm">
         </div>
         <div class="flex flex-col gap-1.5">
           <label for="orderCode">Mã đơn hàng</label>
@@ -70,7 +72,33 @@
     </div>
     <!-- LIST PRODUCTS -->
     <div class="flex flex-col">
+      <!-- PROPERTIES -->
+      <div class="grid border-b-[2px] border-neutral-5 grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_1fr]">
+        <span class="p-2.5 text-neutral-7">Mã đơn hàng</span>
+        <span class="p-2.5 text-neutral-7">Nhân viên bán hàng</span>
+        <span class="p-2.5 text-neutral-7">Tên khách hàng</span>
+        <span class="p-2.5 text-neutral-7">Tổng đơn hàng</span>
+        <span class="p-2.5 text-neutral-7">Tiền khách trả</span>
+        <span class="p-2.5 text-neutral-7">Tiền hoàn trả</span>
+        <span class="p-2.5 text-neutral-7">Thao tác</span>
+      </div>
+      <div class="flex flex-col h-[50vh] overflow-y-scroll not-show-scroll">
 
+        <?php foreach ($transactions as $transaction): ?>
+          <!-- PRODUCT INFO -->
+          <div class="grid border-b-[2px] border-neutral-5 grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_1fr]">
+            <span class="p-2.5 text-neutral-10"><?= $transaction['orderCode'] ?></span>
+            <span class="p-2.5 text-neutral-10"><?= $transaction['salePerson_name'] ?></span>
+            <span class="p-2.5 text-neutral-10"><?= $transaction['customer_name'] ?></span>
+            <span class="p-2.5 text-neutral-10"><?= currency_format($transaction['total_amount']) ?></span>
+            <span class="p-2.5 text-neutral-10"><?= currency_format($transaction['paid_amount']) ?></span>
+            <span class="p-2.5 text-neutral-10"><?= currency_format($transaction['change_amount']) ?></span>
+            <span class="p-2.5 text-neutral-10 flex items-center gap-2">
+              <a class="button-primary-ghost-sm py-1 px-2" href="/transaction?id=<?= $transaction['transaction_id'] ?>">Xem</a>
+            </span>
+          </div>
+        <?php endforeach; ?>
+      </div>
     </div>
   </div>
 </div>

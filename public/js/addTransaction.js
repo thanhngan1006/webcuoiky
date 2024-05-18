@@ -29,18 +29,22 @@ const formFieldCustomerName = document.getElementById(
 const formFieldCustomerAddress = document.getElementById(
   "form-field-customer-address"
 );
+const btnSubmit = document.getElementById("submit-transaction-btn");
 let isProductClicked = false;
 
 btnCheckInfoCustomer.addEventListener("click", getInfoCustomer);
+btnCheckInfoCustomer.classList.add("hidden");
 
 inputTotalAmount.addEventListener("keyup", (event) => {
   totalAmountCustomerSummary.textContent = formatCurrency(event.target.value);
-  changeAmountCustomerSummary.textContent =
-    formatCurrency(event.target.value -
+  changeAmountCustomerSummary.textContent = formatCurrency(
+    event.target.value -
       selectedProductsGlobal.reduce(
         (sum, product) => sum + product.retail_price * product.quantity,
         0
-      ))
+      )
+  );
+  isCanSubmitForm();
 });
 inputCustomerPhone.addEventListener("keyup", handleChangeCustomerPhone);
 
@@ -102,12 +106,15 @@ inputSearchProduct.addEventListener("focus", () => {
 
 inputCustomerName.addEventListener("keyup", (event) => {
   customerNameLabel.textContent = event.target.value;
+  isCanSubmitForm();
 });
 inputCustomerPhone.addEventListener("keyup", (event) => {
   customerPhoneLabel.textContent = event.target.value;
+  isCanSubmitForm();
 });
 inputCustomerAddress.addEventListener("keyup", (event) => {
   customerAddressLabel.textContent = event.target.value;
+  isCanSubmitForm();
 });
 
 function getAllProducts(products) {
@@ -206,13 +213,20 @@ const shuffle = (array) => {
 };
 
 function handleChangeCustomerPhone(event) {
-  btnCheckInfoCustomer.classList.remove("hidden");
   formFieldCustomerName.classList.remove("!opacity-100");
   formFieldCustomerName.classList.remove("!visible");
   formFieldCustomerAddress.classList.remove("!opacity-100");
   formFieldCustomerAddress.classList.remove("!visible");
   customerNameLabel.textContent = "";
   customerAddressLabel.textContent = "";
+  if (
+    event.target.value.trim().length === 0 ||
+    !event.target.value.trim().match(PATTERN_VALIDATE_PHONE)
+  ) {
+    btnCheckInfoCustomer.classList.add("hidden");
+    return;
+  }
+  btnCheckInfoCustomer.classList.remove("hidden");
 }
 
 function handleChangeSearchProducts(event) {
@@ -254,10 +268,7 @@ function checkIsEmptySelectedProducts() {
 function renderSelectedProducts() {
   selectedProducts.innerHTML = "";
   selectedProductsSummary.innerHTML = "";
-  const totalProductsPrice = selectedProductsGlobal.reduce(
-    (sum, product) => sum + product.retail_price * product.quantity,
-    0
-  );
+  const totalProductsPrice = sumSelectedProducts();
   totalAmountSummary.textContent = formatCurrency(totalProductsPrice);
   changeAmountCustomerSummary.textContent = formatCurrency(
     inputTotalAmount.value - totalProductsPrice
@@ -398,18 +409,8 @@ async function getInfoCustomer() {
   } catch (error) {}
 }
 
-async function confirmPrice() {}
-
 async function postJSON() {
   try {
-    const queryParams = selectedProductsGlobal
-      .map(
-        (item, index) =>
-          `products[${index}][barcode]=${encodeURIComponent(
-            item.barcode
-          )}&products[${index}][quantity]=${encodeURIComponent(item.quantity)}`
-      )
-      .join("&");
     const productsListBuy = [
       ...selectedProductsGlobal.map((product) => ({
         barcode: product.barcode,
@@ -434,11 +435,53 @@ async function postJSON() {
       }),
     });
 
-    const result = await response.json();
-    console.log("Success:", result);
+    const data = await response.json();
+    if (data.status === 201) {
+      const toast = document.getElementById("toast");
+      const toastTitle = document.getElementById("toast-title");
+      const toastContent = document.getElementById("toast-content");
+      toastTitle.textContent = "Tạo đơn hàng thành công";
+      toastContent.textContent =
+        "Bạn sẽ được chuyển về trang quản lý sau 3 giây.";
+      toast.classList.add("md:right-5");
+      toast.classList.add("right-4");
+      setTimeout(() => {
+        toast.classList.remove("md:right-5");
+        toast.classList.remove("right-4");
+        toastTitle.textContent = "";
+        toastContent.textContent = "";
+        window.location.replace(`${window.location.origin}/transactions`);
+      }, 3000);
+    }
   } catch (error) {}
+}
+
+function sumSelectedProducts() {
+  return selectedProductsGlobal.reduce(
+    (sum, product) => sum + product.retail_price * product.quantity,
+    0
+  );
+}
+
+function isCanSubmitForm() {
+  const totalProductsPrice = sumSelectedProducts();
+  const isCanSubmit =
+    inputCustomerPhone.value.trim().length > 0 &&
+    inputCustomerPhone.value.trim().match(PATTERN_VALIDATE_PHONE) &&
+    inputCustomerName.value.trim().length > 0 &&
+    inputCustomerAddress.value.trim().length > 0 &&
+    selectedProductsGlobal.length > 0 &&
+    +inputTotalAmount.value >= totalProductsPrice;
+  btnSubmit.setAttribute("disabled", !isCanSubmit);
+  if (!isCanSubmit) {
+    btnSubmit.setAttribute("disabled", true);
+    return;
+  }
+
+  btnSubmit.removeAttribute("disabled");
 }
 
 (function () {
   handleEmptySelectedProducts();
+  !isCanSubmitForm();
 })();

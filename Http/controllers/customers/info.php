@@ -13,14 +13,14 @@ if ($customer) {
   header('Content-Type: application/json; charset=utf-8');
   echo json_encode([
     'status' => 200,
-    'message' => "Founded customer",
+    'message' => "Đã tìm được thông tin khách hàng",
     'customer' => $customer,
   ]);
 } else {
   header('Content-Type: application/json; charset=utf-8');
   echo json_encode([
     'status' => 404,
-    'message' => "Not found customer",
+    'message' => "Không tồn tại khách hàng",
     'customer' => [],
   ]);
 }

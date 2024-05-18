@@ -170,66 +170,81 @@ a {
   .button-primary-solid-sm {
     @apply rounded-sm text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-2.5 px-2 text-sm leading-5 font-semibold bg-primary text-theme-white hover:bg-primary-variant-1 active:bg-primary-variant-2;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
   .button-primary-solid-md {
     @apply rounded-md text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-2.5 px-4 text-sm leading-5 font-semibold bg-primary text-theme-white hover:bg-primary-variant-1 active:bg-primary-variant-2;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
   .button-primary-solid-lg {
     @apply rounded-lg text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-4 px-4 text-md font-semibold bg-primary text-theme-white hover:bg-primary-variant-1 active:bg-primary-variant-2;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
 
   .button-primary-ghost-sm {
     @apply rounded-sm text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-2.5 px-2 text-sm leading-5 font-semibold text-primary bg-primary-1 hover:bg-primary-2 active:bg-primary/20;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
   .button-primary-ghost-md {
     @apply rounded-md text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-2.5 px-4 text-sm leading-5 font-semibold text-primary bg-primary-1 hover:bg-primary-2 active:bg-primary/20;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
   .button-primary-ghost-lg {
     @apply rounded-lg text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-4 px-4 text-md font-semibold text-primary bg-primary-1 hover:bg-primary-2 active:bg-primary/20;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
 
   .button-secondary-solid-sm {
     @apply rounded-sm text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-2.5 px-2 text-sm leading-5 font-semibold bg-secondary text-theme-white hover:bg-secondary-variant-1 active:bg-secondary-variant-2;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
   .button-secondary-solid-md {
     @apply rounded-md text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-2.5 px-4 text-sm leading-5 font-semibold bg-secondary text-theme-white hover:bg-secondary-variant-1 active:bg-secondary-variant-2;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
   .button-secondary-solid-lg {
     @apply rounded-lg text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-4 px-4 text-md font-semibold bg-secondary text-theme-white hover:bg-secondary-variant-1 active:bg-secondary-variant-2;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
 
   .button-red-solid-sm {
     @apply rounded-sm text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-2.5 px-2 text-sm leading-5 font-semibold bg-red-6 text-theme-white hover:bg-red-7 active:bg-red-7;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
   .button-red-solid-md {
     @apply rounded-md text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-2.5 px-4 text-sm leading-5 font-semibold bg-red-6 text-theme-white hover:bg-red-7 active:bg-red-7;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
   .button-red-solid-lg {
     @apply rounded-lg text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-4 px-4 text-md font-semibold bg-red-6 text-theme-white hover:bg-red-7 active:bg-red-7;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
 
   .button-red-ghost-sm {
     @apply rounded-sm text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-2.5 px-2 text-sm leading-5 font-semibold text-red-5 bg-red-1 hover:bg-red-2 active:bg-red-5/20;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
   .button-red-ghost-md {
     @apply rounded-md text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-2.5 px-4 text-sm leading-5 font-semibold text-red-5 bg-red-1 hover:bg-red-2 active:bg-red-5/20;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
   .button-red-ghost-lg {
     @apply rounded-lg text-center text-base duration-150 inline-flex justify-center items-center gap-2;
     @apply py-4 px-4 text-md font-semibold text-red-5 bg-red-1 hover:bg-red-2 active:bg-red-5/20;
+    @apply disabled:pointer-events-none disabled:border-transparent disabled:bg-theme-white-variant-3 disabled:bg-none disabled:text-theme-black/30 disabled:hover:shadow-none;
   }
 
   .nav-item {

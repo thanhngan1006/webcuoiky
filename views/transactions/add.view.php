@@ -8,7 +8,7 @@
     getAllProducts(<?= json_encode($products) ?>);
   });
 </script>
-<div class="flex flex-col gap-4 pb-6 overflow-x-clip">
+<div class="relative flex flex-col gap-4 pb-6 overflow-x-clip">
   <div class='flex items-center gap-1.5'>
     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 512 512">
       <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"
@@ -33,24 +33,64 @@
           <span class="pb-2.5 text-[15px] font-semibold leading-5 border-b border-neutral-5">Thông tin khách hàng</span>
           <div class="grid grid-cols-[1fr_1fr_1fr] gap-2.5">
             <div class="flex flex-col gap-1.5">
-              <label for="customerPhone">Số điện thoại</label>
+              <label for="customerPhone">
+                <div class="flex gap-0.5 items-center">
+                  <span>Số điện thoại</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    class="w-2 h-2 text-common-error">
+                    <path
+                      d="M12 18.26L4.94704 22.208L6.52204 14.28L0.587036 8.792L8.61404 7.84L12 0.5L15.386 7.84L23.413 8.792L17.478 14.28L19.053 22.208L12 18.26Z"
+                      fill="currentColor" />
+                  </svg>
+                </div>
+              </label>
               <input type="text" name="customerPhone" id="customerPhone" placeholder="Nhập số điện thoại"
                 class="base-input-sm">
             </div>
             <div class="flex flex-col gap-1.5 opacity-0 invisible" id="form-field-customer-name">
-              <label for="customerName">Họ và tên</label>
+              <label for="customerName">
+                <div class="flex gap-0.5 items-center">
+                  <span>Họ và tên</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    class="w-2 h-2 text-common-error">
+                    <path
+                      d="M12 18.26L4.94704 22.208L6.52204 14.28L0.587036 8.792L8.61404 7.84L12 0.5L15.386 7.84L23.413 8.792L17.478 14.28L19.053 22.208L12 18.26Z"
+                      fill="currentColor" />
+                  </svg>
+                </div>
+              </label>
               <input type="text" name="customerName" id="customerName" placeholder="Nhập họ và tên"
                 class="base-input-sm">
             </div>
             <div class="flex flex-col gap-1.5 opacity-0 invisible" id="form-field-customer-address">
-              <label for="customerAddress">Địa chỉ</label>
+              <label for="customerAddress">
+                <div class="flex gap-0.5 items-center">
+                  <span>Địa chỉ</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    class="w-2 h-2 text-common-error">
+                    <path
+                      d="M12 18.26L4.94704 22.208L6.52204 14.28L0.587036 8.792L8.61404 7.84L12 0.5L15.386 7.84L23.413 8.792L17.478 14.28L19.053 22.208L12 18.26Z"
+                      fill="currentColor" />
+                  </svg>
+                </div>
+              </label>
               <input type="text" name="customerAddress" id="customerAddress" placeholder="Nhập địa chỉ"
                 class="base-input-sm">
             </div>
           </div>
           <div class="grid grid-cols-[1fr_1fr_1fr] gap-2.5 items-end">
             <div class="flex flex-col gap-1.5">
-              <label for="totalAmount">Tiền đã nhận</label>
+              <label for="totalAmount">
+                <div class="flex gap-0.5 items-center">
+                  <span>Tiền đã nhận</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    class="w-2 h-2 text-common-error">
+                    <path
+                      d="M12 18.26L4.94704 22.208L6.52204 14.28L0.587036 8.792L8.61404 7.84L12 0.5L15.386 7.84L23.413 8.792L17.478 14.28L19.053 22.208L12 18.26Z"
+                      fill="currentColor" />
+                  </svg>
+                </div>
+              </label>
               <input type="text" name="totalAmount" id="totalAmount" placeholder="Nhập tiền nhận từ khách hàng"
                 class="base-input-sm">
             </div>
@@ -102,7 +142,8 @@
       </div>
       <div class="flex items-center justify-end gap-2.5">
         <a href="/transactions" class="button-red-ghost-sm">Huỷ bỏ</a>
-        <button type="button" onclick="postJSON()" class="button-primary-solid-sm">Tạo giao dịch</button>
+        <button type="button" onclick="postJSON()" id="submit-transaction-btn" class="button-primary-solid-sm">Tạo giao
+          dịch</button>
       </div>
     </form>
     <!-- PAYMENT SUMMARY -->
