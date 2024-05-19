@@ -33,8 +33,11 @@ $router->post('/transactions', 'transactions/store.php')->only(['auth', 'salespe
 $router->get('/transaction', 'transactions/show.php')->only(['auth']);
 
 $router->get('/user', 'users/show.php')->only(['auth']);
-$router->get('/user/edit', 'users/edit.php')->only(['auth']);
-$router->patch('/user', 'users/update.php')->only(['auth']);
+$router->get('/user/profile', 'users/profile.php')->only(['auth']);
+$router->get('/user/profile/edit', 'users/profile-edit.php')->only(['auth']);
+$router->get('/user/edit', 'users/edit.php')->only(['auth', 'admin']);
+$router->patch('/user/updateMe', 'users/updateMe.php')->only(['auth']);
+$router->patch('/user/update', 'users/update.php')->only(['auth']);
 $router->get('/user/changepassword', 'users/changepassword.php')->only(['auth']);
 $router->patch('/user/changepassword', 'users/updatepassword.php')->only(['auth']);
 $router->get('/users/create', 'users/create.php')->only(['auth', 'admin']);
@@ -46,5 +49,6 @@ $router->patch('/user/changepwsale', 'users/updatepwsale.php')->only(['auth', 's
 
 
 $router->get('/accounts', 'accounts.php')->only(['auth']);
-$router->get('/users', 'users.php')->only(['auth']);
-$router->get('/customers', 'customers.php')->only(['auth']);
+$router->get('/users', 'users/index.php')->only(['auth', 'admin']);
+$router->get('/customers', 'customers/index.php')->only(['auth']);
+$router->get('/customer', 'customers/show.php')->only(['auth']);

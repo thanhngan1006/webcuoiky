@@ -13,23 +13,19 @@ $db = App::resolve(Database::class);
 //     'id' => $_SESSION['user']['id']
 //   ]
 // )->find();
-$user = $db->query(
-  'select * from users where id = :id',
-  [
-    'id' => $_POST['id']
-  ]
-)->find();
 
 $db->query(
   'update users set 
-   is_active = :is_active 
+   profile_picture_url = :profile_picture_url 
     where id = :id ',
   [
     'id' => $_POST['id'],
-    'is_active' => $_POST['is_active'],
+    'profile_picture_url' => $_POST['profile_picture_url'],   
   ]
 );
 
+$_SESSION['user']['profile_picture_url'] = $_POST['profile_picture_url'];
+
 // redirect the user
-header('location: /users');
+header('location: /');
 die();

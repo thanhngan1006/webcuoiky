@@ -4,9 +4,6 @@ use Core\App;
 use Core\Database;
 use Core\Validator;
 
-// $saigonTz = new DateTimeZone("Asia/Saigon");
-// $now = (new \DateTime('now', $saigonTz))->modify('+60 seconds');
-// dd($now);
 $db = App::resolve(Database::class);
 $params = [];
 // d/n get() la fetchAll() trong function trong class Database
@@ -14,9 +11,7 @@ $queryParts = ['1']; // Default to a condition that is always true
 $customerNameSearchParam = isset($_GET['customerName']) ? $_GET['customerName'] : '';
 $salePersonNameSearchParam = isset($_GET['salePersonName']) ? $_GET['salePersonName'] : '';
 $orderCodeSearchParam = isset($_GET['orderCode']) ? $_GET['orderCode'] : '';
-// $user = $db->query('select * from users where email = "thanhngan10604@gmail.com" ')->findOrFail();
 $userEmail = $_SESSION['user']['email'];
-$user = $db->query("SELECT * FROM users WHERE email = :email", [':email' => $userEmail])->findOrFail();
 
 
 if (!empty($orderCodeSearchParam) && !Validator::string($_GET['orderCode'], 8, 8)) {
@@ -59,5 +54,4 @@ users AS usr ON trans.salesperson_id = usr.id
 WHERE ' . implode(' AND ', $queryParts), $params)->get();
 view("transactions/index.view.php", [
   'transactions' => $transactions,
-  'user' => $user
 ]);

@@ -11,7 +11,10 @@ const PATTERN_VALIDATE_PHONE = /^0\d{9}$/;
 const subMenu = document.getElementById("subMenu");
 
 function toggleMenu() {
-  subMenu.classList.toggle("open-menu");
+  subMenu.classList.toggle("max-h-0");
+  subMenu.classList.toggle("max-h-[400px]");
+  subMenu.classList.toggle("border");
+  subMenu.classList.toggle("border-neutral-4");
 }
 function openNav() {
   if (sidebar.classList.contains("-translate-x-48")) {

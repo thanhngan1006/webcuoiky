@@ -3,6 +3,8 @@
 use Core\App;
 use Core\Database;
 use Core\Validator;
+use Http\Forms\LoginForm;
+use Core\Session;
 
 $db = App::resolve(Database::class);
 
@@ -44,13 +46,31 @@ if (!empty($errors)) {
 
 $db->query(
   'update users set 
-   password_hash = :password_hash 
+   password_hash = :password_hash,
+   locked = :locked 
     where id = :id ',
   [
     'id' => $_POST['id'],
-    'password_hash' => password_hash($_POST['confirm_new_password_hash'],  PASSWORD_BCRYPT)
+    'password_hash' => password_hash($_POST['confirm_new_password_hash'], PASSWORD_BCRYPT),
+    'locked' => 0,
   ]
 );
+
+$user = $db->query('SELECT * FROM users WHERE id = :id', [
+  'id' => $_POST['id'],
+])->findOrFail();
+
+if ($user['is_active'] == 0) {
+  $form = new LoginForm();
+  $form->error('username', 'Tài khoản hiện đang bị khoá.');
+  Session::flash('errors', $form->errors());
+  Session::flash('old', [
+    'username' => $_SESSION['user']['username'],
+  ]);
+  unset($_SESSION['user']);
+
+  return redirect('/login');
+}
 
 header('location: /');
 die();

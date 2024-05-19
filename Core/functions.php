@@ -24,6 +24,18 @@ function currency_format($number, $suffix = 'đ')
   return number_format($number, 0, '.', ',') . "{$suffix}";
 }
 
+
+function convert_role_title($role = 'salesperson')
+{
+  if ($role == 'admin') {
+    return "Quản trị viên";
+  }
+  if($role == 'salesperson') {
+    return "Nhân viên bán hàng";
+  }
+  return "";
+}
+
 function randomNumber($length = 8)
 {
   return substr(str_shuffle("0123456789"), 0, $length);

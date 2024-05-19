@@ -1,7 +1,6 @@
 <?php require base_path('views/partials/head.php') ?>
 <script src="/js/showPassword.js" defer>
 </script>
-
 <div class="flex items-center justify-center min-h-screen bg-gray-50">
 
   <div class="w-full max-w-md p-5 bg-white rounded-sm border border-neutral-5 shadow overflow-hidden">
