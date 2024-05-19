@@ -28,13 +28,11 @@ if (!$user) {
 
 // ===
 // khi link het thoi han va khong the dang nhap duoc
-if (strtotime($current_time_formatted) - strtotime($user['password_reset_expiry'])  >= 0) {
+if (strtotime($current_time_formatted) - strtotime($user['password_reset_expiry']) >= 0) {
   $user = $db->query('UPDATE users SET password_reset_token = NULL, password_reset_expiry = NULL WHERE id = :id', [
-    'id' =>  $user['id'],
+    'id' => $user['id'],
   ]);
-  if (!$user) {
-    abort(419);
-  }
+  abort(419);
 }
 
 

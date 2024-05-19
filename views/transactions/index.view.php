@@ -18,7 +18,8 @@
     </svg>
     <span class='font-semibold text-lg'>Quản lý giao dịch</span>
   </div>
-  <div class="grid grid-cols-[1fr_1fr_1fr_1fr_1fr] gap-3">
+  <div
+    class="grid <?= $_SESSION['user']['role'] === "admin" ? 'grid-cols-[1fr] sm:grid-cols-[1fr_1fr_1fr] md:grid-cols-[1fr_1fr_1fr_1fr] lg:grid-cols-[1fr_1fr_1fr_1fr_1fr]' : 'grid-cols-[1fr]  sm:grid-cols-[1fr_1fr] md:grid-cols-[1fr_1fr_1fr] lg:grid-cols-[1fr_1fr_1fr_1fr]' ?> gap-3">
     <div class="p-3 flex items-center justify-between gap-x-3 bg-neutral-1 border border-neutral-5 rounded">
       <div class="flex flex-col">
         <span>Số lượng đơn hàng</span>
@@ -49,6 +50,27 @@
         </svg>
       </div>
     </div>
+    <?php if ($_SESSION['user']['role'] == 'admin'): ?>
+
+      <div class="p-3 flex items-center justify-between gap-x-3 bg-neutral-1 border border-neutral-5 rounded">
+        <div class="flex flex-col">
+          <span>Lợi nhuân</span>
+          <span class='font-bold text-2xl text-common-success'><?= currency_format(array_reduce($transactions, function ($sum, $transaction) {
+            return $sum + $transaction['total_amount'];
+          }) - array_reduce($transactions, function ($sum, $transaction) {
+              return $sum + $transaction['total_import_price'];
+            })) ?></span>
+        </div>
+        <div class='rotate-[-16.203deg] shrink-0'>
+          <svg class="w-16 h-16 text-neutral-4" width="48" height="53" viewBox="0 0 48 53" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M32.2606 24.2167C32.3901 24.6624 32.3373 25.1412 32.1137 25.548C31.8901 25.9547 31.5141 26.256 31.0685 26.3855L17.6246 30.2921C17.1789 30.4216 16.7 30.3688 16.2932 30.1452C15.8865 29.9216 15.5853 29.5456 15.4557 29.0999C15.3262 28.6542 15.3791 28.1753 15.6026 27.7686C15.8262 27.3619 16.2022 27.0606 16.6479 26.9311L30.0918 23.0245C30.5375 22.895 31.0164 22.9478 31.4231 23.1714C31.8298 23.395 32.1311 23.771 32.2606 24.2167ZM32.0451 29.7464L18.6012 33.6531C18.1555 33.7826 17.7795 34.0838 17.556 34.4906C17.3324 34.8973 17.2795 35.3762 17.409 35.8219C17.5386 36.2676 17.8398 36.6436 18.2465 36.8671C18.6533 37.0907 19.1322 37.1435 19.5779 37.014L33.0218 33.1074C33.4675 32.9779 33.8434 32.6767 34.067 32.2699C34.2906 31.8632 34.3434 31.3843 34.2139 30.9386C34.0844 30.4929 33.7831 30.1169 33.3764 29.8934C32.9697 29.6698 32.4908 29.6169 32.0451 29.7464ZM37.4603 4.48183L46.7385 36.4111C47.2565 38.1939 47.0451 40.1094 46.1509 41.7363C45.2566 43.3633 43.7526 44.5683 41.9698 45.0863L18.443 51.9229C16.6602 52.441 14.7447 52.2296 13.1178 51.3353C11.4908 50.441 10.2858 48.937 9.76775 47.1543L0.489559 15.225C0.230534 14.3336 0.336221 13.3758 0.783368 12.5624C1.23052 11.7489 1.9825 11.1464 2.87388 10.8874L6.23486 9.91072L5.74653 8.23024C5.61702 7.78454 5.66986 7.30566 5.89344 6.89892C6.11701 6.49219 6.493 6.19093 6.93869 6.06142C7.38438 5.93191 7.86327 5.98475 8.27 6.20833C8.67673 6.4319 8.97799 6.80789 9.10751 7.25358L9.59583 8.93407L16.3178 6.98077L15.8295 5.30028C15.6999 4.85459 15.7528 4.3757 15.9764 3.96897C16.1999 3.56224 16.5759 3.26098 17.0216 3.13147C17.4673 3.00195 17.9462 3.0548 18.3529 3.27837C18.7597 3.50194 19.0609 3.87793 19.1904 4.32363L19.6788 6.00412L26.4007 4.05081L25.9124 2.37032C25.7829 1.92463 25.8357 1.44574 26.0593 1.03901C26.2829 0.632281 26.6588 0.331022 27.1045 0.20151C27.5502 0.0719984 28.0291 0.124841 28.4359 0.348415C28.8426 0.571989 29.1438 0.947979 29.2734 1.39367L29.7617 3.07416L33.1227 2.09751C34.014 1.83848 34.9718 1.94417 35.7853 2.39132C36.5987 2.83846 37.2013 3.59044 37.4603 4.48183ZM34.0993 5.45848L30.7383 6.43513L31.2267 8.11562C31.3562 8.56131 31.3033 9.0402 31.0798 9.44693C30.8562 9.85366 30.4802 10.1549 30.0345 10.2844C29.5888 10.4139 29.1099 10.3611 28.7032 10.1375C28.2965 9.91396 27.9952 9.53797 27.8657 9.09227L27.3774 7.41179L20.6554 9.36509L21.1437 11.0456C21.2732 11.4913 21.2204 11.9702 20.9968 12.3769C20.7733 12.7836 20.3973 13.0849 19.9516 13.2144C19.5059 13.3439 19.027 13.2911 18.6203 13.0675C18.2135 12.8439 17.9123 12.4679 17.7828 12.0222L17.2944 10.3417L10.5725 12.295L11.0608 13.9755C11.1903 14.4212 11.1375 14.9001 10.9139 15.3068C10.6903 15.7136 10.3143 16.0148 9.86865 16.1443C9.42296 16.2739 8.94407 16.221 8.53734 15.9974C8.13061 15.7739 7.82935 15.3979 7.69983 14.9522L7.21151 13.2717L3.85053 14.2483L13.1287 46.1776C13.3878 47.069 13.9903 47.821 14.8037 48.2681C15.6172 48.7153 16.575 48.821 17.4664 48.5619L40.9932 41.7254C41.8846 41.4663 42.6365 40.8638 43.0837 40.0504C43.5308 39.2369 43.6365 38.2791 43.3775 37.3877L34.0993 5.45848Z"
+              fill="currentColor" />
+          </svg>
+        </div>
+      </div>
+    <?php endif; ?>
     <div class="p-3 flex items-center justify-between gap-x-3 bg-neutral-1 border border-neutral-5 rounded">
       <div class="flex flex-col">
         <span>Tổng tiền khách trả</span>
@@ -82,7 +104,7 @@
       </div>
     </div>
   </div>
-  <div class="flex flex-col gap-5 h-full p-5 bg-white rounded-sm border border-neutral-5 shadow overflow-hidden">
+  <div class="flex flex-col gap-5 h-full p-5 bg-white rounded-sm border border-neutral-5 shadow">
     <!-- FORM SEARCH AND BUTTON ADD -->
     <div class="flex justify-between items-end pb-5 border-b border-neutral-5">
       <form method="get" class="flex gap-2.5 items-end">
@@ -96,7 +118,7 @@
           <input type="text" name="customerName" id="customerName" placeholder="Tìm tên khách hàng"
             class="base-input-sm">
         </div>
-        <div class="flex flex-col gap-1.5">
+        <div class="flex flex-col gap-1.5  sm:flex">
           <label for="orderCode">Mã đơn hàng</label>
           <input type="text" name="orderCode" id="orderCode" placeholder="Tìm mã đơn hàng" class="base-input-sm">
         </div>
@@ -117,21 +139,23 @@
           <span>Tìm kiếm</span>
         </button>
       </form>
-      <a href="/transactions/add" class="button-primary-solid-md">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
-          <g clip-path="url(#clip0_4225_4719)">
-            <path
-              d="M7.35186 7.35186V4.75926H8.64815V7.35186H11.2407V8.64815H8.64815V11.2407H7.35186V8.64815H4.75926V7.35186H7.35186ZM8.00001 14.4815C4.42028 14.4815 1.51852 11.5797 1.51852 8.00001C1.51852 4.42028 4.42028 1.51852 8.00001 1.51852C11.5797 1.51852 14.4815 4.42028 14.4815 8.00001C14.4815 11.5797 11.5797 14.4815 8.00001 14.4815ZM8.00001 13.1852C9.3752 13.1852 10.6941 12.6389 11.6665 11.6665C12.6389 10.6941 13.1852 9.3752 13.1852 8.00001C13.1852 6.62481 12.6389 5.30594 11.6665 4.33353C10.6941 3.36112 9.3752 2.81482 8.00001 2.81482C6.62481 2.81482 5.30594 3.36112 4.33353 4.33353C3.36112 5.30594 2.81482 6.62481 2.81482 8.00001C2.81482 9.3752 3.36112 10.6941 4.33353 11.6665C5.30594 12.6389 6.62481 13.1852 8.00001 13.1852Z"
-              fill="white" />
-          </g>
-          <defs>
-            <clipPath id="clip0_4225_4719">
-              <rect width="15.5556" height="15.5556" fill="white" transform="translate(0.222229 0.222229)" />
-            </clipPath>
-          </defs>
-        </svg>
+      <?php if ($_SESSION['user']['role'] != 'admin'): ?>
+        <a href="/transactions/add" class="button-primary-solid-md">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
+            <g clip-path="url(#clip0_4225_4719)">
+              <path
+                d="M7.35186 7.35186V4.75926H8.64815V7.35186H11.2407V8.64815H8.64815V11.2407H7.35186V8.64815H4.75926V7.35186H7.35186ZM8.00001 14.4815C4.42028 14.4815 1.51852 11.5797 1.51852 8.00001C1.51852 4.42028 4.42028 1.51852 8.00001 1.51852C11.5797 1.51852 14.4815 4.42028 14.4815 8.00001C14.4815 11.5797 11.5797 14.4815 8.00001 14.4815ZM8.00001 13.1852C9.3752 13.1852 10.6941 12.6389 11.6665 11.6665C12.6389 10.6941 13.1852 9.3752 13.1852 8.00001C13.1852 6.62481 12.6389 5.30594 11.6665 4.33353C10.6941 3.36112 9.3752 2.81482 8.00001 2.81482C6.62481 2.81482 5.30594 3.36112 4.33353 4.33353C3.36112 5.30594 2.81482 6.62481 2.81482 8.00001C2.81482 9.3752 3.36112 10.6941 4.33353 11.6665C5.30594 12.6389 6.62481 13.1852 8.00001 13.1852Z"
+                fill="white" />
+            </g>
+            <defs>
+              <clipPath id="clip0_4225_4719">
+                <rect width="15.5556" height="15.5556" fill="white" transform="translate(0.222229 0.222229)" />
+              </clipPath>
+            </defs>
+          </svg>
 
-        <span>Tạo giao dịch</span>
+          <span>Tạo giao dịch</span>
+        <?php endif; ?>
       </a>
     </div>
     <!-- LIST PRODUCTS -->
@@ -154,7 +178,7 @@
         <?php endif; ?>
         <span class="p-2.5 text-neutral-7">Thao tác</span>
       </div>
-      <div class="flex flex-col overflow-y-auto not-show-scroll h-[50vh]">
+      <div class="flex flex-col overflow-y-auto not-show-scroll h-[35vh]">
         <?php foreach ($transactions as $transaction): ?>
           <!-- PRODUCT INFO -->
           <div

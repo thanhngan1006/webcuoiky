@@ -13,8 +13,17 @@ $db = App::resolve(Database::class);
 //   ]
 // )->findOrFail();
 
-
+$user = $db->query('SELECT * FROM users WHERE id = :id', [
+  'id' => $_GET['id']
+])->findOrFail();
+$transactions = $db->query('SELECT  *
+FROM 
+transactions
+WHERE salesperson_id = :id', [
+  'id' => $_GET['id']
+])->get();
 
 view("users/edit.view.php", [
-  'user' => $_SESSION['user']
+  'user' => $user,
+  'transactions' => $transactions,
 ]);

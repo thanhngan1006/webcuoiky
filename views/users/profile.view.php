@@ -1,5 +1,6 @@
 <?php require base_path('views/partials/head.php') ?>
 <?php require base_path('views/partials/header.php') ?>
+
 <div class="relative flex flex-col gap-4 pb-6 overflow-x-clip">
   <div class='flex items-center gap-1.5'>
     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 512 512">
@@ -15,13 +16,15 @@
         d="M206 306c-18.05-8.27-37.93-11.45-59-11.45-52 0-102.1 25.85-114.65 76.2-1.65 6.66 2.53 13.25 9.37 13.25H154"
         fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" />
     </svg>
-    <span class='font-semibold text-lg'>Chỉnh sửa nhân viên</span>
+    <span class='font-semibold text-lg'>Thông tin cá nhân</span>
   </div>
   <div class="grid grid-cols-1 items-start gap-4">
-
-    <form method="POST" action="/user/update" class="col-span-1 md:col-span-1 flex flex-col gap-4">
-      <input type="hidden" name="_method" value="PATCH">
-      <input type="hidden" name="id" value="<?= $user['id'] ?>">
+    <div class="flex items-center justify-center">
+      <img class="w-44 h-44 rounded-full"
+        src="<?= $_SESSION['user']['profile_picture_url'] ?? 'https://1.bp.blogspot.com/-LjgFJBMTmeM/YZ-UJ2Mdb-I/AAAAAAAACMk/3iYczLi5BTQefjXjnJsNtaSYlP-A2jO6wCLcBGAsYHQ/s1200/2a.jpg' ?>"
+        alt="profile img">
+    </div>
+    <div class="col-span-1 md:col-span-1 flex flex-col gap-4">
       <div class="flex flex-col gap-5 p-5 bg-white rounded border border-neutral-5 shadow
       overflow-hidden">
         <div class="flex flex-col gap-1.5">
@@ -32,14 +35,14 @@
                 Tên đăng nhập
               </label>
               <input type="text" name="username" id="username" placeholder="Nhập số điện thoại" class="base-input-sm"
-                value="<?= $user['username'] ?>" disabled>
+                value="<?= $_SESSION['user']['username'] ?>" disabled>
             </div>
             <div class="flex flex-col gap-1.5">
               <label for="full_name">
                 Họ và tên
               </label>
               <input type="text" name="full_name" id="full_name" placeholder="Nhập số điện thoại" class="base-input-sm"
-                value="<?= $user['full_name'] ?>" disabled>
+                value="<?= $_SESSION['user']['full_name'] ?>" disabled>
             </div>
 
             <div class="flex flex-col gap-1.5">
@@ -47,39 +50,31 @@
                 Email
               </label>
               <input type="text" name="email" id="email" placeholder="Nhập số điện thoại" class="base-input-sm"
-                value="<?= $user['email'] ?>" disabled>
+                value="<?= $_SESSION['user']['email'] ?>" disabled>
             </div>
             <div class="flex flex-col gap-1.5">
               <label for="role">
                 Vai trò
               </label>
               <input type="text" name="role" id="role" placeholder="Nhập số điện thoại" class="base-input-sm"
-                value="<?= convert_role_title($user['role']) ?>" disabled>
+                value="<?= convert_role_title($_SESSION['user']['role']) ?>" disabled>
             </div>
             <div class="flex flex-col gap-1.5">
-              <label for="is_active">
-                Trạng thái
+              <label for="profile_picture_url">
+                Hình ảnh
               </label>
-              <div class="flex items-center gap-4">
-                <div class="flex items-center gap-1.5">
-                  <input type="radio" id="active-user" name="is_active" class="radio-input" value="1" <?= $user['is_active'] == 1 ? "checked" : "" ?>>
-                  <label for="active-user">Hoạt động</label>
-                </div>
-                <div class="flex items-center gap-1.5">
-                  <input type="radio" id="inactive-user" name="is_active" class="radio-input" value="0" <?= $user['is_active'] == 0 ? "checked" : "" ?>>
-                  <label for="inactive-user">Tạm khoá</label>
-                </div>
-              </div>
+              <input type="text" name="profile_picture_url" id="profile_picture_url" class="base-input-sm"
+                value="<?= $_SESSION['user']['profile_picture_url'] ?? "Bạn chưa có thông tin hình ảnh" ?>" disabled>
             </div>
           </div>
         </div>
       </div>
       <div class="flex items-center justify-end gap-2.5">
-        <a href="/user?id=<?= $user['id'] ?>" class="button-primary-solid-sm">Quay lại</a>
-        <button type="submit" class="button-secondary-solid-sm">Cập nhật</button>
+        <a href="/users" class="button-primary-solid-sm">Quay lại</a>
+        <a href="/user/profile/edit" class="button-secondary-solid-sm">Chỉnh sửa thông
+          tin</a>
       </div>
-    </form>
+    </div>
   </div>
 </div>
-
 <?php require base_path('views/partials/footer.php') ?>

@@ -53,13 +53,12 @@ if (!empty($errors)) {
   ]);
 }
 
-
 $db->query(
   'update users set 
    password_hash = :password_hash 
     where id = :id ',
   [
-    'id' => $_POST['id'],
+    'id' => $_SESSION['user']['id'],
     'password_hash' => password_hash($_POST['confirm_new_password_hash'],  PASSWORD_BCRYPT)
   ]
 );

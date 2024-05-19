@@ -115,13 +115,13 @@ if ($user) {
 
   $mail->setFrom('thanhngan10604@gmail.com'); //your gmail
 
-  // $mail->addAddress($_POST["email"]);
-  $mail->addAddress("phuocduy.dev@gmail.com");
+  $mail->addAddress($_POST["email"]);
   $mail->isHTML(true);
 
   $mail->Subject = "Go directly to PhoneStore";
   
-  $url = "http://localhost:8888/session/verify?token=$userToken";
+  $url = "http://localhost:1234/session/verify?token=$userToken";
+  // $url = "https://webcuoiky-ngananmy.000webhostapp.com/session/verify?token=$userToken";
   $mail->Body    = 'Click here to visit our website : <a href="' . $url . '">' . $url . '</a>' . '<br />' .  'It is valid in 1 minute. ';
   $mail->send();
 

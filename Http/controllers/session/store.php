@@ -19,13 +19,24 @@ if ($form->validate($username, $password_hash)) {
   $auth = new Authenticator();
   if ($auth->attempt($username, $password_hash)) {
     // if pass go tin index.php
-    redirect('/');
+    $isValidAccount = true;
+    if ($_SESSION['user']['locked'] == 1) {
+      $isValidAccount = false;
+      $form->error('username', 'Tài khoản chỉ được phép truy cập qua liên kết trong email.');
+      unset($_SESSION['user']);
+    } else if ($_SESSION['user']['is_active'] == 0) {
+      $isValidAccount = false;
+      $form->error('username', 'Tài khoản hiện đang bị khoá.');
+      unset($_SESSION['user']);
+    }
+    if ($isValidAccount) {
+      redirect('/');
+    }
+  } else {
+    // if fail, update the error list
+    $form->error('username', 'Tên đăng nhập hoặc mật khẩu không hợp lệ');
   }
-
-  // if fail, update the error list
-  $form->error('username', 'No matching account found for that username and password');
 }
-
 Session::flash('errors', $form->errors());
 Session::flash('old', [
   'username' => $_POST['username']
